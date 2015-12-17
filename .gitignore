@@ -20,4 +20,4 @@ gen
 .idea
 *.iml
 
-*.sh
+build*.sh
