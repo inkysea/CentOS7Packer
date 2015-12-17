@@ -25,7 +25,7 @@
       "http_directory": "scripts",
       "iso_urls": [
         "iso/CentOS-7-x86_64-Minimal-1503-01.iso",
-        "http://centos.mirrors.hoobly.com/7/isos/x86_64/CentOS-7-x86_64-Minimal-1503-01.iso"
+        "http://centos.mirrors.hoobly.com/7.1.1503/isos/x86_64/CentOS-7-x86_64-Minimal-1503-01.iso"
       ],
       "iso_checksum_type": "md5",
       "iso_checksum": "d07ab3e615c66a8b2e9a50f4852e6a77",
