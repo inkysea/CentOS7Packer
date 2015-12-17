@@ -1,0 +1,23 @@
+# Created by .ignore support plugin (hsz.mobi)
+PhotonOSPacker.iml
+*.ovf
+*.box
+.idea
+.vagrant
+packer_cache
+*.tar.gz
+*.vmdk
+*.mf
+temp
+demo
+
+out
+gen
+/ISO/
+/output*
+/packer_cache/
+/scripts/*.swp
+.idea
+*.iml
+
+*.sh

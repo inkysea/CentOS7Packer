@@ -1,0 +1,98 @@
+{
+  "variables": {
+    "iso_file": "",
+    "iso_sha1sum": "",
+    "root_password": "2RQrZ83i79N6szpvZNX6",
+    "build_dir":"photon_build"
+  },
+  "builders": [
+    {
+      "name": "vagrant-vsphere",
+      "vm_name": "{{user `build_dir`}}",
+      "vmdk_name": "photon-disk1",
+      "type": "vmware-iso",
+      "headless": false,
+      "disk_size": 4096,
+      "disk_type_id": "thin",
+      "guest_os_type": "other3xlinux-64",
+      "iso_url": "{{user `iso_file`}}",
+      "iso_checksum": "{{user `iso_sha1sum`}}",
+      "iso_checksum_type": "sha1",
+      "remote_type" : "esx5",
+      "remote_datastore" : "SSD-12",
+      "output_directory" : "{{user `build_dir`}}",
+      "remote_host" : "10.25.27.12",
+      "remote_username" : "root",
+      "remote_password" : "VMware1!",
+      "ssh_username": "root",
+      "ssh_password": "{{user `root_password`}}",
+      "ssh_wait_timeout": "60m",
+      "boot_wait": "5s",
+      "shutdown_command": "shutdown -h now",
+      "http_directory": "scripts",
+      "version": 10,
+      "vmx_data_post": {
+        "displayname": "VMware Photon",
+        "usb.present": "false"
+      },
+      "vmx_data": {
+        "ethernet0.networkName": "VM Network",
+        "ethernet0.present": "TRUE",
+        "ethernet0.virtualDev": "vmxnet3",
+        "cpuid.coresPerSocket": "1",
+        "scsi0.virtualDev": "pvscsi",
+        "memsize": "512",
+        "numvcpus": "1"
+      },
+      "boot_command": [
+        "<esc><wait>",
+        "vmlinuz initrd=initrd.img root=/dev/ram0 loglevel=3 ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/photon-kickstart.json",
+        "<enter>"
+      ]
+    }
+  ],
+    "provisioners": [
+    {
+      "type": "shell",
+      "script": "scripts/photon-package_provisioning.sh"
+    },
+    {
+      "type": "shell",
+      "script": "scripts/photon-appcatalyst-user_provisioning.sh"
+    },
+    {
+      "type": "shell",
+      "script": "scripts/photon-sharedfolders_prep.sh"
+    },
+    {
+      "type": "file",
+      "source": "scripts/photon-docker-unit.service",
+      "destination": "/lib/systemd/system/docker.service"
+    },
+    {
+      "type": "shell",
+      "inline": ["sed -i '/linux/ s/$/ net.ifnames=0/' /boot/grub2/grub.cfg"]
+    },
+    {
+      "type": "shell",
+      "inline": ["echo 'GRUB_CMDLINE_LINUX=\"net.ifnames=0\"' >> /etc/default/grub"]
+    },
+    {
+      "type": "shell",
+      "script": "scripts/photon-setup_docker.sh"
+    },
+    {
+      "type": "shell",
+      "script": "scripts/photon-security_check.sh"
+    },
+      {
+      "type": "file",
+      "source": "scripts/welcome.txt",
+      "destination": "/tmp/welcome.txt"
+      }
+  ],
+  "post-processors": [
+
+
+  ]
+  }
