@@ -111,19 +111,13 @@
     }
    ],
     "provisioners": [
-
-     {
-        "type": "file",
-        "source": "scripts/vmware-tools.repo",
-        "destination": "/etc/yum.repos.d/scripts/vmware-tools.repo"
-     },
+      {
+        "type": "shell",
+        "script": "scripts/package_provisioning.sh"
+      },
      {
         "type": "shell",
-        "script": "scripts/install_vmware_tools.sh"
-    },
-    {
-      "type": "shell",
-      "script": "scripts/package_provisioning.sh"
+        "script": "scripts/install_openvmware_tools.sh"
     },
     {
       "type": "shell",
