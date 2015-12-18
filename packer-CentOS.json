@@ -45,7 +45,8 @@
         "cpuid.coresPerSocket": "1",
         "memsize": "512",
         "numvcpus": "1",
-        "scsi0.virtualDev": "pvscsi"
+        "scsi0.virtualDev": "pvscsi",
+        "virtualHW.version": "11"
       }
     },
     {
@@ -110,6 +111,12 @@
     }
    ],
     "provisioners": [
+
+     {
+        "type": "file",
+        "source": "scripts/vmware-tools.repo",
+        "destination": "/etc/yum.repos.d/scripts/vmware-tools.repo"
+     },
      {
         "type": "shell",
         "script": "scripts/install_vmware_tools.sh"
