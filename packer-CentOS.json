@@ -5,6 +5,7 @@
     "root_password": ""
   },
   "builders": [
+
     {
       "name": "centos_esx",
       "type": "vmware-iso",
@@ -14,7 +15,6 @@
       "remote_password" : "{{user `esx_password`}}",
       "remote_datastore" : "{{user `esx_datastore`}}",
       "output_directory" : "{{user `build_dir`}}",
-      "tools_upload_flavor": "linux",
       "boot_command": [
         "<up><tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter>"
       ],
@@ -38,12 +38,14 @@
       "tools_upload_flavor": "linux",
       "vm_name":"{{user `build_dir`}}",
       "vmx_data": {
-        "ethernet0.networkName": "VM Network",
-        "ethernet0.present": "TRUE",
         "ethernet0.virtualDev": "vmxnet3",
+        "ethernet0.networkName": "VM Network",
+        "ethernet0.addressType": "generated",
+        "ethernet0.present": "TRUE",
         "cpuid.coresPerSocket": "1",
         "memsize": "512",
-        "numvcpus": "1"
+        "numvcpus": "1",
+        "scsi0.virtualDev": "pvscsi"
       }
     },
     {
