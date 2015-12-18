@@ -43,7 +43,7 @@
         "ethernet0.virtualDev": "vmxnet3",
         "cpuid.coresPerSocket": "1",
         "memsize": "512",
-        "numvcpus": "1",
+        "numvcpus": "1"
       }
     },
     {
